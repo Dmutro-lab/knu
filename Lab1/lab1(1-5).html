@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>Лабораторна №1 – Варіант 13</title>
+<a href="Lab1.html" >Назад </a>
+<script>
+// Завдання 2 – обчислення (№13 відповідає №28 у таблиці → x + y)
+function calculate() {
+      let x = parseFloat(document.getElementById("x").value);
+      let y = parseFloat(document.getElementById("y").value);
+      let z = parseFloat(document.getElementById("z").value);
+
+      let F = Math.pow(x, y) + Math.pow(y, z) + Math.pow(z, x);
+
+      document.getElementById("result").innerText = "F = " + F;
+}
+
+// Завдання 3 – події (№13 → onSelect, onMouseOver)
+function fun(msg) {
+    document.getElementById("t_res").value = msg;
+}
+
+// Завдання №4
+function calcBranch() {
+    let x = parseFloat(document.getElementById("x4").value);
+    let y = parseFloat(document.getElementById("y4").value);
+    let F;
+
+    if (y > 3 && x > 0) {
+        F = 2 * Math.sqrt(x * y);
+    } 
+    else if ((x*x / 2 > 3*x) || (x*x > 2*y)) {
+        F = x / (y * y);
+    } 
+    else {
+        F = (x * x) / y;
+    }
+
+    document.getElementById("res4").value = F;
+}
+
+// Завдання 5
+function calcSeries() {
+    let x = parseFloat(document.getElementById("x5").value);
+    let y = parseFloat(document.getElementById("y5").value);
+    let sum = 0;
+
+    for (let i = 6; i <= 12; i++) {
+        // обчислюємо факторіал i
+        let factorial = 1;
+        for (let j = 1; j <= i; j++) {
+            factorial *= j;
+        }
+
+        // додаємо член ряду
+        sum += Math.pow(-1, i) * (Math.pow(x, y) - Math.sqrt(x)) / factorial;
+    }
+
+    document.getElementById("res5").value = sum;
+}
+</script>
+</head>
+<body>
+
+<h2>Завдання 1</h2>
+<p>Це звичайний HTML абзац.</p>
+<script>
+document.write("Привіт! Мене звати Івасюк Дмитро Іванович, студент групи ІПЗ_22.");
+</script>
+<p>Знову звичайний HTML абзац.</p>
+<form>
+<input type="button" value="Click me" 
+onClick="alert('Я народився 11.07.2007 року в місті Львів')">
+</form>
+
+<hr>
+
+<h2>Завдання 2</h2>
+<form>
+    <p><b>Формула:</b> F = x<sup>y</sup> + y<sup>z</sup> + z<sup>x</sup></p>
+ <label>Введіть x: <input type="number" id="x" value="2"></label><br><br>
+  <label>Введіть y: <input type="number" id="y" value="3"></label><br><br>
+  <label>Введіть z: <input type="number" id="z" value="4"></label><br><br>
+
+<button type="button" onclick="calculate()">Обчислити F</button>
+
+  <p id="result"></p>
+</form>
+
+<hr>
+
+<h2>Завдання 3</h2>
+<form>
+<input type="text" size="50" value="Виділи текст" 
+onSelect="fun('Ви виділили текст у полі вводу');"><br><br>
+
+<input type="text" size="50" value="Наведіть курсор" 
+onMouseOver="fun('Курсор наведено на елемент');"><br><br>
+
+Результат: <input type="text" size="70" id="t_res"><br>
+</form>
+
+<hr>
+
+<h2>Завдання 4</h2>
+<p><b>Формула:</b><br>
+F = { 2√(x·y), якщо y > 3 і x > 0 
+    <br>
+       x / y², якщо (x² / 2 > 3x) або (x² > 2y) 
+       <br>
+       x² / y, інакше }
+</p>
+
+<form>
+  x: <input type="number" id="x4" value="4"><br><br>
+  y: <input type="number" id="y4" value="2"><br><br>
+  Результат F: <input type="text" id="res4" readonly><br><br>
+  <button type="button" onclick="calcBranch()">Обчислити</button>
+</form>
+<hr>
+
+<h2>Завдання 5</h2>
+<p><b>Формула:</b><br>
+F = Σ<sub>i=6</sub><sup>12</sup> [ ((-1)<sup>i</sup> * (x<sup>y</sup> – √x)) / i! ]
+</p>
+
+<form>
+  x: <input type="number" id="x5" value="2"><br><br>
+  y: <input type="number" id="y5" value="3"><br><br>
+  Результат F: <input type="text" id="res5" readonly><br><br>
+  <button type="button" onclick="calcSeries()">Обчислити</button>
+</form>
+
+</body>
+</html>

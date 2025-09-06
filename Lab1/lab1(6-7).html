@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 7</title>
+    <script>
+        // Масиви
+        let product = ["Інструмент", "Іграшка", "Дошка", "Дріт"];
+        let quantity = [20, 50, 15, 100];
+        let cost = [120, 80, 250, 15];
+
+        // Індекс вибраного товару
+        let currentIndex = -1;
+
+        function fun1() {
+            let select = document.form1.productSelect;
+            currentIndex = select.selectedIndex;
+
+            if (currentIndex !== -1) {
+                document.form1.output_quantity.value =
+                    "Кількість: " + quantity[currentIndex];
+                document.form1.output_cost.value =
+                    "Вартість за одиницю: " + cost[currentIndex] + " грн";
+            }
+        }
+
+        function fun2() {
+            if (currentIndex !== -1) {
+                let total = quantity[currentIndex] * cost[currentIndex];
+                document.form1.output_total.value =
+                    "Загальна сума: " + total + " грн";
+            } else {
+                document.form1.output_total.value =
+                    "Оберіть товар зі списку!";
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="form1">
+        Оберіть товар:
+        <select name="productSelect">
+            <option value="Інструмент">Інструмент</option>
+            <option value="Іграшка">Іграшка</option>
+            <option value="Дошка">Дошка</option>
+            <option value="Дріт">Дріт</option>
+        </select>
+        <br><br>
+        <input type="button" value="Наявна кількість і вартість" onClick="fun1()">
+        <br><br>
+        <input type="text" size="50" name="output_quantity" readonly>
+        <br>
+        <input type="text" size="50" name="output_cost" readonly>
+        <br><br>
+        <input type="button" value="Загальна сума" onClick="fun2()">
+        <br><br>
+        <input type="text" size="50" name="output_total" readonly>
+    </form>
+</body>
+</html>
