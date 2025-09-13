@@ -17,80 +17,76 @@
             let min = now.getMinutes();
             let sec = now.getSeconds();
 
-            
             month = (month < 10 ? "0" : "") + month;
             day = (day < 10 ? "0" : "") + day;
             hour = (hour < 10 ? "0" : "") + hour;
             min = (min < 10 ? "0" : "") + min;
             sec = (sec < 10 ? "0" : "") + sec;
 
-            let formatted = `${year}.${month}.${day}-${hour}.${min}.${sec}`;
+            let formatted = `${year}#${month}#${day}-${hour}#${min}#${sec}`;
 
-            document.getElementById("clock").innerText = formatted;
+            document.getElementById("clockInput").value = formatted;
         }
 
         setInterval(updateClock, 1000); 
         window.onload = updateClock; 
 
-        //Завдання №2
-        function appendCalc(value) {
-        document.getElementById("calc-display").value += value;
-    }
-
-    function clearCalc() {
-        document.getElementById("calc-display").value = "";
-    }
-
-    function calculateCalc() {
-        try {
-            let result = eval(document.getElementById("calc-display").value);
-            document.getElementById("calc-display").value = result;
-        } catch (e) {
-            document.getElementById("calc-display").value = "Помилка!";
-        }
-    }
-
-
-function generateTable() {
-    const rows = parseInt(document.getElementById("rows").value);
-    const cols = parseInt(document.getElementById("cols").value);
-    const container = document.getElementById("table-container");
-    const sumCol3El = document.getElementById("sum-col3");
-
-    if (isNaN(rows) || isNaN(cols) || rows < 1 || cols < 1) {
-        container.innerHTML = "<p style='color:red;'>Введіть коректні значення!</p>";
-        sumCol3El.innerText = "";
-        return;
-    }
-
-    let table = "<table border='1' cellpadding='6' style='border-collapse:collapse; margin:0 auto; text-align:center;'>";
-    let sumCol3 = 0;
-
-    for (let i = 1; i <= rows; i++) {
-        table += "<tr>";
-        for (let j = 1; j <= cols; j++) {
-            let val = 3 * j - 2 * i;
-            if (j === 3) sumCol3 += val;
-            table += `<td>${val}</td>`;
-        }
-        table += "</tr>";
-    }
-    table += "</table>";
-
-    container.innerHTML = table;
-
-    if (cols >= 3) {
-        sumCol3El.innerText = "Сума елементів третього стовпця: " + sumCol3;
-    } else {
-        sumCol3El.innerText = "Стовпців менше ніж 3 — суму рахувати неможливо.";
-    }
-}
-
-
-
-console.log("=== Завдання 4 ===");
-
         
+        function appendCalc(value) {
+            document.getElementById("calc-display").value += value;
+        }
+
+        function clearCalc() {
+            document.getElementById("calc-display").value = "";
+        }
+
+        function calculateCalc() {
+            try {
+                let result = eval(document.getElementById("calc-display").value);
+                document.getElementById("calc-display").value = result;
+            } catch (e) {
+                document.getElementById("calc-display").value = "Помилка!";
+            }
+        }
+
+        function generateTable() {
+            const rows = parseInt(document.getElementById("rows").value);
+            const cols = parseInt(document.getElementById("cols").value);
+            const container = document.getElementById("table-container");
+            const sumCol3El = document.getElementById("sum-col3");
+
+            if (isNaN(rows) || isNaN(cols) || rows < 1 || cols < 1) {
+                container.innerHTML = "<p style='color:red;'>Введіть коректні значення!</p>";
+                sumCol3El.innerText = "";
+                return;
+            }
+
+            let table = "<table border='1' cellpadding='6' style='border-collapse:collapse; margin:0 auto; text-align:center;'>";
+            let sumCol3 = 0;
+
+            for (let i = 1; i <= rows; i++) {
+                table += "<tr>";
+                for (let j = 1; j <= cols; j++) {
+                    let val = 3 * j - 2 * i;
+                    if (j === 3) sumCol3 += val;
+                    table += `<td>${val}</td>`;
+                }
+                table += "</tr>";
+            }
+            table += "</table>";
+
+            container.innerHTML = table;
+
+            if (cols >= 3) {
+                sumCol3El.innerText = "Сума елементів третього стовпця: " + sumCol3;
+            } else {
+                sumCol3El.innerText = "Стовпців менше ніж 3 — суму рахувати неможливо.";
+            }
+        }
+
+        // --- Завдання 4 ---
+        console.log("=== Завдання 4 ===");
+
         let a = 17;
         let b = 5;
         let remainder = a % b;
@@ -106,46 +102,35 @@ console.log("=== Завдання 4 ===");
 
         console.log("Масив повністю:", arr);
 
+        // --- Завдання 5 ---
+        console.log("=== Завдання 5 ===");
 
-      
-console.log("=== Завдання 5 ===");
+        console.info("Це інформаційне повідомлення");
+        console.warn("Це попередження!");
+        console.error("Це повідомлення про помилку");
 
+        let student = { name: "Іван", age: 20, group: "КН-13" };
+        console.dir(student);
 
-console.info("Це інформаційне повідомлення");
+        let elem = document.createElement("p");
+        elem.textContent = "Привіт, я DOM-елемент";
+        console.dirxml(elem);
 
+        console.time("Цикл for");
+        for (let i = 0; i < 100000; i++) { Math.sqrt(i); }
+        console.timeEnd("Цикл for");
 
-console.warn("Це попередження!");
+        console.profile("Профіль");
+        for (let i = 0; i < 10000; i++) { Math.pow(i, 2); }
+        console.profileEnd("Профіль");
 
-
-console.error("Це повідомлення про помилку");
-
-
-let student = { name: "Іван", age: 20, group: "КН-13" };
-console.dir(student);
-
-let elem = document.createElement("p");
-elem.textContent = "Привіт, я DOM-елемент";
-console.dirxml(elem);
-
-
-console.time("Цикл for");
-for (let i = 0; i < 100000; i++) { Math.sqrt(i); }
-console.timeEnd("Цикл for");
-
-
-console.profile("Профіль");
-for (let i = 0; i < 10000; i++) { Math.pow(i, 2); }
-console.profileEnd("Профіль");
-
-
-let x = 5;
-console.assert(x > 10, "Помилка: x не більше 10");
+        let x = 5;
+        console.assert(x > 10, "Помилка: x не більше 10");
 
     </script>
 </head>
 <body class="dark">
     <div class="nav-buttons">
-      
         <a href="https://dmutro-lab.github.io/knu/" class="btn-nav">На головну</a>
     </div>
 
@@ -155,93 +140,90 @@ console.assert(x > 10, "Помилка: x не більше 10");
     </header>
 
     <main class="labs">
-      
         <section>
             <h2>Завдання 1</h2>
             <p>Засобами JavaScript створити годинник у форматі <b>year#moun#day-hour#min#sec</b></p>
-            <div id="clock" style="font-size: 24px; font-weight: bold; margin-top: 10px;"></div>
+            <form name="clockForm">
+                <input type="text" id="clockInput" size="25" readonly style="font-size: 20px; font-weight: bold;">
+            </form>
         </section>
 
         <hr>
 
-        
         <section>
-             <main class="labs"></main>
             <h2>Завдання 2</h2>
             <p>
-        Створити простий калькулятор з кнопками.<br>
-        При натисканні на кнопки вони повинні виводитися у поле виводу,<br>
-        а обчислення виконуються за допомогою функції <code>eval()</code>.
-    </p>
+                Створити простий калькулятор з кнопками.<br>
+                При натисканні на кнопки вони повинні виводитися у поле виводу,<br>
+                а обчислення виконуються за допомогою функції <code>eval()</code>.
+            </p>
 
-           <div id="calculator">
-        <input type="text" id="calc-display" readonly>
-        <div class="calc-buttons">
-            <button onclick="appendCalc('7')">7</button>
-            <button onclick="appendCalc('8')">8</button>
-            <button onclick="appendCalc('9')">9</button>
-            <button onclick="appendCalc('/')">/</button>
+            <div id="calculator">
+                <input type="text" id="calc-display" readonly>
+                <div class="calc-buttons">
+                    <button onclick="appendCalc('7')">7</button>
+                    <button onclick="appendCalc('8')">8</button>
+                    <button onclick="appendCalc('9')">9</button>
+                    <button onclick="appendCalc('/')">/</button>
 
-            <button onclick="appendCalc('4')">4</button>
-            <button onclick="appendCalc('5')">5</button>
-            <button onclick="appendCalc('6')">6</button>
-            <button onclick="appendCalc('*')">*</button>
+                    <button onclick="appendCalc('4')">4</button>
+                    <button onclick="appendCalc('5')">5</button>
+                    <button onclick="appendCalc('6')">6</button>
+                    <button onclick="appendCalc('*')">*</button>
 
-            <button onclick="appendCalc('1')">1</button>
-            <button onclick="appendCalc('2')">2</button>
-            <button onclick="appendCalc('3')">3</button>
-            <button onclick="appendCalc('-')">-</button>
+                    <button onclick="appendCalc('1')">1</button>
+                    <button onclick="appendCalc('2')">2</button>
+                    <button onclick="appendCalc('3')">3</button>
+                    <button onclick="appendCalc('-')">-</button>
 
-            <button onclick="appendCalc('0')">0</button>
-            <button onclick="appendCalc('.')">.</button>
-            <button onclick="calculateCalc()">=</button>
-            <button onclick="appendCalc('+')">+</button>
+                    <button onclick="appendCalc('0')">0</button>
+                    <button onclick="appendCalc('.')">.</button>
+                    <button onclick="calculateCalc()">=</button>
+                    <button onclick="appendCalc('+')">+</button>
 
-            <button onclick="clearCalc()" style="grid-column: span 4; background:#ff1744;">C</button>
-        </div>
-    </div>
+                    <button onclick="clearCalc()" style="grid-column: span 4; background:#ff1744;">C</button>
+                </div>
+            </div>
         </section>
 
         <hr>
 
-       
         <section>
-             <h2>Завдання 3</h2>
-    <p>
-        Введіть кількість рядків і стовпців для генерації таблиці.<br>
-        Формула для елементів: <b>A<sub>ij</sub> = 3j - 2i</b>
-    </p>
+            <h2>Завдання 3</h2>
+            <p>
+                Введіть кількість рядків і стовпців для генерації таблиці.<br>
+                Формула для елементів: <b>A<sub>ij</sub> = 3j - 2i</b>
+            </p>
 
-    <label>Кількість рядків: <input type="number" id="rows" min="1"></label>
-    <label>Кількість стовпців: <input type="number" id="cols" min="1"></label>
-    <button onclick="generateTable()">Створити таблицю</button>
+            <label>Кількість рядків: <input type="number" id="rows" min="1"></label>
+            <label>Кількість стовпців: <input type="number" id="cols" min="1"></label>
+            <button onclick="generateTable()">Створити таблицю</button>
 
-    <div id="table-container" style="margin-top:15px;"></div>
-    <p id="sum-col3" style="font-weight:bold; color:#00e676;"></p>
+            <div id="table-container" style="margin-top:15px;"></div>
+            <p id="sum-col3" style="font-weight:bold; color:#00e676;"></p>
         </section>
 
         <hr>
 
-        
         <section>
-          <h2>Завдання 4</h2>
-    <p>
-        Реалізувати і дослідити роботу методу <b>console.log()</b> для різних випадків.<br>
-        Результат дивіться у <b>Консолі браузера</b> (F12 → Console).
-    </p>
+            <h2>Завдання 4</h2>
+            <p>
+                Реалізувати і дослідити роботу методу <b>console.log()</b> для різних випадків.<br>
+                Результат дивіться у <b>Консолі браузера</b> (F12 → Console).
+            </p>
         </section>
 
         <hr>
 
         <section>
             <h2>Завдання 5</h2>
-    <p>
-        Реалізувати і дослідити роботу методів <b>console.info()</b>, <b>console.warn()</b>, 
-        <b>console.error()</b>, <b>console.dir()</b>, <b>console.dirxml()</b>, 
-        <b>console.time()</b>, <b>console.timeEnd()</b>, <b>console.profile()</b>, 
-        <b>console.profileEnd()</b>, <b>console.assert()</b>.<br>
-        Результати дивіться у <b>Консолі браузера</b> (F12 → Console).
-    </p>
+            <p>
+                Реалізувати і дослідити роботу методів <b>console.info()</b>, <b>console.warn()</b>, 
+                <b>console.error()</b>, <b>console.dir()</b>, <b>console.dirxml()</b>, 
+                <b>console.time()</b>, <b>console.timeEnd()</b>, <b>console.profile()</b>, 
+                <b>console.profileEnd()</b>, <b>console.assert()</b>.<br>
+                Результати дивіться у <b>Консолі браузера</b> (F12 → Console).
+            </p>
         </section>
     </main>
 </body>

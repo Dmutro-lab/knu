@@ -7,7 +7,7 @@
   <a href="https://dmutro-lab.github.io/knu/" class="btn-nav"> На головну</a>
 </div>
 <script>
-// Завдання 2 – обчислення (№13 відповідає №28 у таблиці → x + y)
+
 function calculate() {
       let x = parseFloat(document.getElementById("x").value);
       let y = parseFloat(document.getElementById("y").value);
@@ -18,12 +18,12 @@ function calculate() {
       document.getElementById("result").innerText = "F = " + F;
 }
 
-// Завдання 3 – події (№13 → onSelect, onMouseOver)
+
 function fun(msg) {
     document.getElementById("t_res").value = msg;
 }
 
-// Завдання №4
+
 function calcBranch() {
     let x = parseFloat(document.getElementById("x4").value);
     let y = parseFloat(document.getElementById("y4").value);
@@ -42,20 +42,20 @@ function calcBranch() {
     document.getElementById("res4").value = F;
 }
 
-// Завдання 5
+
 function calcSeries() {
     let x = parseFloat(document.getElementById("x5").value);
     let y = parseFloat(document.getElementById("y5").value);
     let sum = 0;
 
     for (let i = 6; i <= 12; i++) {
-        // обчислюємо факторіал i
+        
         let factorial = 1;
         for (let j = 1; j <= i; j++) {
             factorial *= j;
         }
 
-        // додаємо член ряду
+    
         sum += Math.pow(-1, i) * (Math.pow(x, y) - Math.sqrt(x)) / factorial;
     }
 

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №3 – Варіант 13</title>
+    <link rel="stylesheet" href="../style.css"> 
+</head>
+<body>
+    <div class="nav-buttons">
+      
+        <a href="https://dmutro-lab.github.io/knu/" class="btn-nav">На головну</a>
+    </div>
+
+    <h2>Завдання 1. Площа прямокутника</h2>
+    Довжина: <input type="number" id="len" onkeyup="calcRectangle()">
+    Ширина: <input type="number" id="wid" onkeyup="calcRectangle()">
+    <p>Площа: <span id="area"></span></p>
+
+    <hr>
+
+    <h2>Завдання 2–3. Екранна клавіатура</h2>
+    <textarea id="display" rows="4" cols="40"></textarea><br>
+    <button onclick="clean()">Очистити поле</button>
+    <button onclick="toggleLayout()">Alt+Shift</button>
+    <div id="screenKeyboard"></div>
+
+    <hr>
+
+    <h2>Завдання 4. Перегляд зображень</h2>
+    <img id="viewer" width="200" height="150">
+    <br>
+    <button onclick="prevImage()">Назад</button>
+    <button onclick="nextImage()">Вперед</button>
+
+    <hr>
+
+    <h2>Завдання 5. Арифметичні завдання</h2>
+    <p id="task"></p>
+    Відповідь: <input type="number" id="answer">
+    <button onclick="checkAnswer()">Перевірити</button>
+    <button onclick="nextTask()">Наступне завдання</button>
+    <p id="result"></p>
+    <p id="score"></p>
+
+    <hr>
+
+    <h2>Завдання 6. Дерево</h2>
+    <div id="tree"></div>
+
+<script>
+
+function calcRectangle() {
+  let l = document.getElementById("len").value;
+  let w = document.getElementById("wid").value;
+  if (l && w) {
+    document.getElementById("area").innerText = l * w;
+  }
+}
+
+
+let layoutUA = ['0','1','2','3','4','5','6','7','8','9',
+'а','б','в','г','ґ','д','е','є','ж','з','и','і','ї','й',
+'к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч',
+'ш','щ','ь','ю','я'];
+let layoutEN = ['0','1','2','3','4','5','6','7','8','9',
+'a','b','c','d','e','f','g','h','i','j','k','l','m',
+'n','o','p','q','r','s','t','u','v','w','x','y','z'];
+let currentLayout = layoutUA;
+
+function createKeyboard(letters) {
+  let keys = "";
+  letters.forEach((key, i) => {
+    if (i % 11 === 0) keys += "<br>";
+    keys += `<button onclick="addSymbol('${key}')">${key}</button>`;
+  });
+  document.getElementById("screenKeyboard").innerHTML = keys;
+}
+
+function addSymbol(k) {
+  document.getElementById("display").value += k;
+}
+
+function clean() {
+  document.getElementById("display").value = "";
+}
+
+function toggleLayout() {
+  currentLayout = (currentLayout === layoutUA) ? layoutEN : layoutUA;
+  createKeyboard(currentLayout);
+}
+
+createKeyboard(currentLayout);
+
+
+let images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"];
+let imgIndex = 0;
+
+function showImage() {
+  document.getElementById("viewer").src = images[imgIndex];
+}
+function nextImage() {
+  imgIndex = (imgIndex + 1) % images.length;
+  showImage();
+}
+function prevImage() {
+  imgIndex = (imgIndex - 1 + images.length) % images.length;
+  showImage();
+}
+showImage();
+
+
+let currentTask = 0;
+let correct = 0;
+let total = 5;
+let x, y, op, rightAnswer;
+
+function generateTask() {
+  x = Math.floor(Math.random()*10);
+  y = Math.floor(Math.random()*10);
+  let ops = ["+","-","*","/"];
+  op = ops[Math.floor(Math.random()*4)];
+  if (op === "/" && y === 0) y = 1;
+
+  switch(op) {
+    case "+": rightAnswer = x + y; break;
+    case "-": rightAnswer = x - y; break;
+    case "*": rightAnswer = x * y; break;
+    case "/": rightAnswer = Math.round((x / y) * 100) / 100; break;
+  }
+
+  document.getElementById("task").innerText = `${x} ${op} ${y} = ?`;
+  document.getElementById("answer").value = "";
+}
+
+function checkAnswer() {
+  let ans = parseFloat(document.getElementById("answer").value);
+  if (ans === rightAnswer) {
+    document.getElementById("result").innerText = "Правильно!";
+    correct++;
+  } else {
+    document.getElementById("result").innerText = "Помилка, правильна відповідь: " + rightAnswer;
+  }
+  let percent = Math.round((correct / (currentTask+1)) * 100);
+  document.getElementById("score").innerText = 
+    `Рахунок: ${percent}% (${correct} правильних з ${currentTask+1})`;
+}
+
+function nextTask() {
+  if (currentTask < total-1) {
+    currentTask++;
+    generateTask();
+    document.getElementById("result").innerText = "";
+  } else {
+    document.getElementById("task").innerText = "Тест завершено!";
+  }
+}
+generateTask();
+
+
+let treeData = {
+  "fruits": ["apple","pineapple","appricot","pear","lemon"],
+  "vegetables": ["potatoes","beetroot","carrots","pear"]
+};
+
+function buildTree(obj, parent) {
+  for (let key in obj) {
+    let div = document.createElement("div");
+    let link = document.createElement("a");
+    link.href = "javascript:void(0)";
+    link.innerText = key;
+    let ul = document.createElement("ul");
+    ul.style.display = "none";
+    obj[key].forEach(item=>{
+      let li = document.createElement("li");
+      li.innerText = item;
+      ul.appendChild(li);
+    });
+    link.onclick = () => {
+      ul.style.display = (ul.style.display==="none")?"block":"none";
+    };
+    div.appendChild(link);
+    div.appendChild(ul);
+    parent.appendChild(div);
+  }
+}
+buildTree(treeData, document.getElementById("tree"));
+
+</script>
+</body>
+</html>
