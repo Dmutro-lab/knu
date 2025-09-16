@@ -174,3 +174,7 @@ button:hover {
 }
 
 
+.space-btn {
+  flex: 1; 
+  min-width: 400px; 
+}

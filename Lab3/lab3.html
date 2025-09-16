@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="nav-buttons">
-      
         <a href="https://dmutro-lab.github.io/knu/" class="btn-nav">На головну</a>
     </div>
 
@@ -38,8 +37,8 @@
     <h2>Завдання 5. Арифметичні завдання</h2>
     <p id="task"></p>
     Відповідь: <input type="number" id="answer">
-    <button onclick="checkAnswer()">Перевірити</button>
-    <button onclick="nextTask()">Наступне завдання</button>
+    <button id="checkBtn" onclick="checkAnswer()">Перевірити</button>
+    <button id="nextBtn" onclick="nextTask()">Наступне завдання</button>
     <p id="result"></p>
     <p id="score"></p>
 
@@ -49,7 +48,7 @@
     <div id="tree"></div>
 
 <script>
-
+// === Завдання 1 ===
 function calcRectangle() {
   let l = document.getElementById("len").value;
   let w = document.getElementById("wid").value;
@@ -58,21 +57,35 @@ function calcRectangle() {
   }
 }
 
+// === Клавіатура ===
+let layoutUA = [
+  ['й','ц','у','к','е','н','г','ш','щ','з','х','ї'],
+  ['ф','і','в','а','п','р','о','л','д','ж','є'],
+  ['я','ч','с','м','и','т','ь','б','ю'],
+  [' ']
+];
 
-let layoutUA = ['0','1','2','3','4','5','6','7','8','9',
-'а','б','в','г','ґ','д','е','є','ж','з','и','і','ї','й',
-'к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч',
-'ш','щ','ь','ю','я'];
-let layoutEN = ['0','1','2','3','4','5','6','7','8','9',
-'a','b','c','d','e','f','g','h','i','j','k','l','m',
-'n','o','p','q','r','s','t','u','v','w','x','y','z'];
+let layoutEN = [
+  ['q','w','e','r','t','y','u','i','o','p'],
+  ['a','s','d','f','g','h','j','k','l'],
+  ['z','x','c','v','b','n','m'],
+  [' '] 
+];
+
 let currentLayout = layoutUA;
 
 function createKeyboard(letters) {
   let keys = "";
-  letters.forEach((key, i) => {
-    if (i % 11 === 0) keys += "<br>";
-    keys += `<button onclick="addSymbol('${key}')">${key}</button>`;
+  letters.forEach(row => {
+    keys += "<div class='kb-row'>";
+    row.forEach(key => {
+      if (key === " ") {
+        keys += `<button class="space-btn" onclick="addSymbol(' ')">Space</button>`;
+      } else {
+        keys += `<button onclick="addSymbol('${key}')">${key}</button>`;
+      }
+    });
+    keys += "</div>";
   });
   document.getElementById("screenKeyboard").innerHTML = keys;
 }
@@ -92,7 +105,7 @@ function toggleLayout() {
 
 createKeyboard(currentLayout);
 
-
+// завдання 4
 let images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"];
 let imgIndex = 0;
 
@@ -109,7 +122,7 @@ function prevImage() {
 }
 showImage();
 
-
+// завданя 5
 let currentTask = 0;
 let correct = 0;
 let total = 5;
@@ -134,6 +147,8 @@ function generateTask() {
 }
 
 function checkAnswer() {
+  if (currentTask >= total) return;
+
   let ans = parseFloat(document.getElementById("answer").value);
   if (ans === rightAnswer) {
     document.getElementById("result").innerText = "Правильно!";
@@ -141,9 +156,16 @@ function checkAnswer() {
   } else {
     document.getElementById("result").innerText = "Помилка, правильна відповідь: " + rightAnswer;
   }
+
   let percent = Math.round((correct / (currentTask+1)) * 100);
   document.getElementById("score").innerText = 
     `Рахунок: ${percent}% (${correct} правильних з ${currentTask+1})`;
+
+  if (currentTask >= total-1) {
+    document.getElementById("task").innerText = "Тест завершено!";
+    document.getElementById("checkBtn").disabled = true;
+    document.getElementById("nextBtn").disabled = true;
+  }
 }
 
 function nextTask() {
@@ -153,11 +175,13 @@ function nextTask() {
     document.getElementById("result").innerText = "";
   } else {
     document.getElementById("task").innerText = "Тест завершено!";
+    document.getElementById("checkBtn").disabled = true;
+    document.getElementById("nextBtn").disabled = true;
   }
 }
 generateTask();
 
-
+// завдання 6
 let treeData = {
   "fruits": ["apple","pineapple","appricot","pear","lemon"],
   "vegetables": ["potatoes","beetroot","carrots","pear"]
@@ -185,7 +209,6 @@ function buildTree(obj, parent) {
   }
 }
 buildTree(treeData, document.getElementById("tree"));
-
 </script>
 </body>
 </html>
