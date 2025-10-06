@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота №6</title>
+  <link rel="stylesheet" href="../style.css">
+   <div class="nav-buttons">
+    <a href="https://dmutro-lab.github.io/knu/" class="btn-nav">На головну</a>
+  </div>
+</head>
+<body>
+
+<h2>Завдання 1.Вивід елементів e-mail</h2>
+<script>
+let s = "dwbyu@mail.ua";
+let r = /^([a-z0-9]+)(\.[a-z0-9]+)*@([a-z0-9]+)(\.[a-z0-9]+)*$/i;
+let a = s.match(r);
+
+if (a) {
+  for (let i = 0; i < a.length; i++) {
+    document.writeln("<hr> a[" + i + "] " + a[i]);
+  }
+} else {
+  document.writeln("Невірний формат e-mail!");
+}
+</script>
+
+<hr><br>
+
+<h2>Завдання 2.Форма перевірки введених даних</h2>
+<form id="userForm">
+  <label for="email">E-mail:</label><br>
+  <input type="text" id="email" name="email" required><br><br>
+
+  <label for="fullname">Ім’я та прізвище:</label><br>
+  <input type="text" id="fullname" name="fullname" required><br><br>
+
+  <label for="login">Логін:</label><br>
+  <input type="text" id="login" name="login" required><br><br>
+
+  <label for="password">Пароль:</label><br>
+  <input type="password" id="password" name="password" required><br><br>
+
+  <label for="index">Поштовий індекс:</label><br>
+  <input type="text" id="index" name="index" required><br><br>
+
+  <button type="button" onclick="validateForm()">Перевірити</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+
+function validateForm() {
+  const email = document.getElementById("email").value.trim();
+  const fullname = document.getElementById("fullname").value.trim();
+  const login = document.getElementById("login").value.trim();
+  const password = document.getElementById("password").value;
+  const index = document.getElementById("index").value.trim();
+  const result = document.getElementById("result");
+
+  // Регулярні вирази
+  const emailRegex = /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i;
+  const fullnameRegex = /^([A-ZА-ЯІЇЄ][a-zа-яіїє]+)\s([A-ZА-ЯІЇЄ]+)$/;
+  const loginRegex = /^[a-zA-Z]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[_\-!@#$%^&*])[A-Za-z\d_\-!@#$%^&*]{8,}$/;
+  const indexRegex = /^\d{5}$/;
+
+  let errors = [];
+
+  if (!emailRegex.test(email)) {
+    errors.push("E-mail повинен бути у форматі name@pnu.edu.ua");
+  }
+
+  if (!fullnameRegex.test(fullname)) {
+    errors.push("Ім’я та прізвище: перша літера велика, решта маленькі, прізвище великими літерами (дозволено кирилицю або латиницю). Приклад: Іван ІВАНОВ");
+  }
+
+  if (!loginRegex.test(login)) {
+    errors.push("Логін повинен містити лише латинські літери");
+  }
+
+  if (!passwordRegex.test(password)) {
+    errors.push("Пароль має містити мінімум 8 символів, з яких хоча б 1 літера, 1 цифра та 1 спецсимвол (_-!@#$%^&*)");
+  }
+
+  if (!indexRegex.test(index)) {
+    errors.push("Поштовий індекс має складатися з 5 цифр");
+  }
+
+  if (errors.length > 0) {
+    result.style.color = "red";
+    result.innerHTML = errors.join("<br>");
+  } else {
+    result.style.color = "green";
+    result.innerHTML = " Усі дані валідні!";
+  }
+}
+</script>
+
+</body>
+</html>

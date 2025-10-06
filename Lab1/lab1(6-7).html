@@ -21,6 +21,8 @@
             let select = document.form1.productSelect;
             currentIndex = select.selectedIndex;
 
+            
+
             if (currentIndex !== -1) {
                 document.form1.output_quantity.value =
                     "Кількість: " + quantity[currentIndex];
@@ -42,6 +44,7 @@
     </script>
 </head>
 <body>
+   
     <form name="form1">
         Оберіть товар:
         <select name="productSelect">
