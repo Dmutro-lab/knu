@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота №7</title>
+  <link rel="stylesheet" href="../style.css">
+   <div class="nav-buttons">
+    <a href="https://dmutro-lab.github.io/knu/" class="btn-nav">На головну</a>
+  </div>
+</head>
+<body>
+  <h1>Лабораторна робота №7. Завдання 1-7</h1>
+
+  <section>
+    <h2>Завдання 1: Довжина рядка</h2>
+    <input id="str1" type="text" placeholder="Введіть рядок">
+    <button onclick="task1()">Обчислити</button>
+    <p id="res1"></p>
+  </section>
+
+  <section>
+    <h2>Завдання 2: Верхній і нижній регістри</h2>
+    <input id="str2" type="text" placeholder="Введіть рядок">
+    <button onclick="task2()">Показати</button>
+    <p id="res2"></p>
+  </section>
+
+  <section>
+    <h2>Завдання 3: Індекс першого входження символу</h2>
+    <input id="str3" type="text" placeholder="Введіть рядок">
+    <input id="ch3" type="text" maxlength="1" placeholder="Символ">
+    <button onclick="task3()">Знайти</button>
+    <p id="res3"></p>
+  </section>
+
+  <section>
+    <h2>Завдання 4: Кількість входжень символу</h2>
+    <input id="str4" type="text" placeholder="Введіть рядок">
+    <input id="ch4" type="text" maxlength="1" placeholder="Символ">
+    <button onclick="task4()">Порахувати</button>
+    <p id="res4"></p>
+  </section>
+
+  <section>
+    <h2>Завдання 5: Міняємо місцями сусідні символи</h2>
+    <input id="str5" type="text" placeholder="Введіть рядок">
+    <button onclick="task5()">Перетворити</button>
+    <p id="res5"></p>
+  </section>
+
+  <section>
+    <h2>Завдання 6: Перевірка на спам</h2>
+    <input id="str6" type="text" placeholder="Введіть рядок">
+    <button onclick="task6()">Перевірити</button>
+    <p id="res6"></p>
+  </section>
+
+  <section>
+    <h2>Завдання 7: Скорочення рядка</h2>
+    <input id="str7" type="text" placeholder="Введіть рядок">
+    <input id="len7" type="number" placeholder="Макс. довжина">
+    <button onclick="task7()">Скоротити</button>
+    <p id="res7"></p>
+  </section>
+
+  <script>
+    function task1() {
+      const str = document.getElementById("str1").value;
+      document.getElementById("res1").textContent = "Довжина: " + str.length;
+    }
+
+    function task2() {
+      const str = document.getElementById("str2").value;
+      document.getElementById("res2").innerHTML = `
+        Верхній регістр: ${str.toUpperCase()} <br>
+        Нижній регістр: ${str.toLowerCase()}
+      `;
+    }
+
+    function task3() {
+      const str = document.getElementById("str3").value;
+      const ch = document.getElementById("ch3").value;
+      const idx = str.indexOf(ch);
+      document.getElementById("res3").textContent = idx >= 0 ? `Індекс: ${idx}` : "Не знайдено";
+    }
+
+    function task4() {
+      const str = document.getElementById("str4").value;
+      const ch = document.getElementById("ch4").value;
+      let count = 0;
+      for (let c of str) if (c === ch) count++;
+      document.getElementById("res4").textContent = `Кількість входжень: ${count}`;
+    }
+
+    function task5() {
+      let str = document.getElementById("str5").value.split("");
+      for (let i = 0; i < str.length - 1; i += 2) {
+        [str[i], str[i + 1]] = [str[i + 1], str[i]];
+      }
+      document.getElementById("res5").textContent = str.join("");
+    }
+
+    function task6() {
+      const str = document.getElementById("str6").value.toLowerCase();
+      const spamWords = ["100% безкоштовно", "збільшення продажів", "тільки сьогодні", "не видаляйте"];
+      const hasSpam = spamWords.some(word => str.includes(word));
+      document.getElementById("res6").textContent = hasSpam ? "Містить спам" : "Спаму не виявлено";
+    }
+
+    function task7() {
+      const str = document.getElementById("str7").value;
+      const maxLen = parseInt(document.getElementById("len7").value);
+      let result = str;
+      if (str.length > maxLen) {
+        result = str.slice(0, maxLen - 3) + "...";
+      }
+      document.getElementById("res7").textContent = result;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота №7</title>
+  <link rel="stylesheet" href="../style.css">
+   <div class="nav-buttons">
+    <a href="https://dmutro-lab.github.io/knu/" class="btn-nav">На головну</a>
+  </div>
+</head>
+<body>
+  <h1>Лабораторна робота №7. Завдання 8–10</h1>
+
+  <section>
+    <h2>Завдання 8: Видалити всі голосні літери з рядка</h2>
+    <input id="str8" type="text" placeholder="Введіть рядок">
+    <button onclick="removeVowels()">Виконати</button>
+    <p id="res8"></p>
+  </section>
+
+  <section>
+    <h2>Завдання 9: Замінити всі пробіли на "_"</h2>
+    <input id="str9" type="text" placeholder="Введіть рядок">
+    <button onclick="replaceSpaces()">Виконати</button>
+    <p id="res9"></p>
+  </section>
+
+  <section>
+    <h2>Завдання 10: Перевірити, чи є підрядок паліндромом (довжина ≥ 3)</h2>
+    <input id="str10" type="text" placeholder="Введіть рядок">
+    <button onclick="checkSubPalindrome()">Перевірити</button>
+    <p id="res10"></p>
+  </section>
+
+  <script>
+    // --- Завдання 8 ---
+    function removeVowels() {
+      const str = document.getElementById("str8").value;
+      const result = str.replace(/[aeiouаеєиіїоуюяAEIOUАЕЄИІЇОУЮЯ]/g, "");
+      document.getElementById("res8").textContent = result;
+    }
+
+    // --- Завдання 9 ---
+    function replaceSpaces() {
+      const str = document.getElementById("str9").value;
+      const result = str.replace(/\s+/g, "_");
+      document.getElementById("res9").textContent = result;
+    }
+
+    // --- Завдання 10 ---
+    function checkSubPalindrome() {
+      const str = document.getElementById("str10").value.toLowerCase().replace(/\s+/g, "");
+      let found = false;
+
+      for (let i = 0; i < str.length; i++) {
+        for (let j = i + 3; j <= str.length; j++) {
+          const sub = str.substring(i, j);
+          if (sub === sub.split("").reverse().join("")) {
+            document.getElementById("res10").textContent = 
+              `Є паліндромний підрядок: "${sub}"`;
+            return;
+          }
+        }
+      }
+      document.getElementById("res10").textContent = "Паліндромних підрядків не знайдено";
+    }
+  </script>
+</body>
+</html>
