@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Завдання 1–6</title>
+    <link rel="stylesheet" href="../style.css">
+    <div class="nav-buttons">
+    <a href="https://dmutro-lab.github.io/knu/" class="btn-nav">На головну</a>
+  </div>
+</head>
+<body>
+
+ 
+
+  <div class="container">
+
+    <!-- Завдання 1 -->
+    <section class="card">
+      <h2>Завдання 1. Робота з часом</h2>
+      <label>Додати секунд:</label>
+      <input type="number" id="secondsInput" placeholder="введіть кількість секунд">
+      <button onclick="showCurrentTime()">Показати поточний час</button>
+      <button onclick="changeTime()">Змінити час</button>
+      <div id="task1-output" class="result"></div>
+    </section>
+
+    <!-- Завдання 2 -->
+    <section class="card">
+      <h2>Завдання 2. Дата і час</h2>
+
+      <p>2.1 Виведення поточної дати, дня тижня і часу</p>
+      <button onclick="showDateTime()">Виконати</button>
+      <div id="dateOutput" class="result"></div>
+
+      <h3>2.2. Останній день місяця</h3>
+      <label>Рік:</label>
+      <input type="number" id="yearInput">
+      <label>Місяць (1–12):</label>
+      <input type="number" id="monthInput">
+      <button onclick="getLastDay()">Показати</button>
+      <div id="lastDayOutput" class="result"></div>
+
+      <h3>2.3. Секунди від початку/до кінця дня</h3>
+      <button onclick="getSecondsInfo()">Показати</button>
+      <div id="secondsOutput" class="result"></div>
+    </section>
+
+    <!-- Завдання 3 -->
+    <section class="card">
+      <h2>Завдання 3. Клас Car</h2>
+      <div id="carOutput" class="result"></div>
+    </section>
+
+    <!-- Завдання 4 -->
+    <section class="card">
+      <h2>Завдання 4. Клас ElectricCar</h2>
+      <div id="electricCarOutput" class="result"></div>
+    </section>
+
+    <!-- Завдання 5 -->
+    <section class="card">
+      <h2>Завдання 5. Статичний метод</h2>
+      <div id="mathOutput" class="result"></div>
+    </section>
+
+    <!-- Завдання 6 -->
+    <section class="card">
+      <h2>Завдання 6. Варіант 3 — Rectangle та Square</h2>
+      <label>Ширина:</label>
+      <input type="number" id="rectWidth">
+      <label>Висота:</label>
+      <input type="number" id="rectHeight">
+      <button onclick="showRectangleInfo()">Показати інформацію</button>
+      <button class="btn-clear" onclick="clearFields()">Очистити поля</button>
+      <div id="rectangleOutput" class="result"></div>
+    </section>
+
+  </div>
+
+  <script>
+    // ---------------- Завдання 1 ----------------
+    const time = { hours: 20, minutes: 30, seconds: 45 };
+
+    function formatTime() {
+      return `${time.hours.toString().padStart(2, '0')}:${time.minutes.toString().padStart(2, '0')}:${time.seconds.toString().padStart(2, '0')}`;
+    }
+
+    function showCurrentTime() {
+      document.getElementById("task1-output").innerText = "Поточний час: " + formatTime();
+    }
+
+    function changeTime() {
+      const addSeconds = parseInt(document.getElementById("secondsInput").value) || 0;
+      let totalSeconds = time.hours * 3600 + time.minutes * 60 + time.seconds + addSeconds;
+      totalSeconds = ((totalSeconds % 86400) + 86400) % 86400;
+      time.hours = Math.floor(totalSeconds / 3600);
+      time.minutes = Math.floor((totalSeconds % 3600) / 60);
+      time.seconds = totalSeconds % 60;
+      showCurrentTime();
+    }
+
+    // ---------------- Завдання 2 ----------------
+    function showDateTime() {
+      const now = new Date();
+      const days = ["неділя", "понеділок", "вівторок", "середа", "четвер", "пʼятниця", "субота"];
+      const months = ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"];
+      const dateStr = `Дата: ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} року<br>
+      День тижня: ${days[now.getDay()]}<br>
+      Час: ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+      document.getElementById("dateOutput").innerHTML = dateStr;
+    }
+
+    function getLastDay() {
+      const year = parseInt(document.getElementById("yearInput").value);
+      const month = parseInt(document.getElementById("monthInput").value);
+      if (!year || !month || month < 1 || month > 12) {
+        document.getElementById("lastDayOutput").innerText = "Введіть коректні дані!";
+        return;
+      }
+      const lastDay = new Date(year, month, 0).getDate();
+      document.getElementById("lastDayOutput").innerText = `Останній день місяця: ${lastDay}`;
+    }
+
+    function getSecondsInfo() {
+      const now = new Date();
+      const secondsPassed = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+      const secondsLeft = 86400 - secondsPassed;
+      document.getElementById("secondsOutput").innerHTML = `Пройшло секунд: ${secondsPassed}<br>До наступного дня: ${secondsLeft}`;
+    }
+
+    // ---------------- Завдання 3 ----------------
+    class Car {
+      constructor(brand, model, year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+      }
+      info() {
+        return `Авто: ${this.brand} ${this.model}, ${this.year} року.`;
+      }
+    }
+    const car1 = new Car("Toyota", "Camry", 2020);
+    document.getElementById("carOutput").innerText = car1.info();
+
+    // ---------------- Завдання 4 ----------------
+    class ElectricCar extends Car {
+      constructor(brand, model, year, battery) {
+        super(brand, model, year);
+        this.battery = battery;
+      }
+      charge() {
+        return `${this.brand} ${this.model} заряджається... Батарея: ${this.battery} kWh`;
+      }
+    }
+    const tesla = new ElectricCar("Tesla", "Model 3", 2022, 75);
+    document.getElementById("electricCarOutput").innerHTML = `${tesla.info()}<br>${tesla.charge()}`;
+
+    // ---------------- Завдання 5 ----------------
+    class MathHelper {
+      static add(a, b) {
+        return a + b;
+      }
+    }
+    document.getElementById("mathOutput").innerText = `Результат MathHelper.add(5, 7): ${MathHelper.add(5, 7)}`;
+
+    // ---------------- Завдання 6 ----------------
+    class Rectangle {
+      constructor(width, height) {
+        this.width = width;
+        this.height = height;
+      }
+      getArea() {
+        return this.width * this.height;
+      }
+      getPerimeter() {
+        return 2 * (this.width + this.height);
+      }
+    }
+
+    class Square extends Rectangle {
+      constructor(side) {
+        super(side, side);
+      }
+      static isSquare(rect) {
+        return rect.width === rect.height;
+      }
+    }
+
+    function showRectangleInfo() {
+      const w = parseFloat(document.getElementById("rectWidth").value);
+      const h = parseFloat(document.getElementById("rectHeight").value);
+      if (!w || !h) {
+        document.getElementById("rectangleOutput").innerText = "Будь ласка, введіть усі значення.";
+        return;
+      }
+
+      const rect = new Rectangle(w, h);
+      let result = `Площа: ${rect.getArea()}<br>Периметр: ${rect.getPerimeter()}<br>`;
+      if (Square.isSquare(rect)) result += "✅ Це квадрат!";
+      else result += "❌ Це не квадрат.";
+      document.getElementById("rectangleOutput").innerHTML = result;
+    }
+
+    function clearFields() {
+      document.getElementById("rectWidth").value = "";
+      document.getElementById("rectHeight").value = "";
+      document.getElementById("rectangleOutput").innerHTML = "";
+    }
+  </script>
+</body>
+</html>
