@@ -196,8 +196,8 @@
 
       const rect = new Rectangle(w, h);
       let result = `Площа: ${rect.getArea()}<br>Периметр: ${rect.getPerimeter()}<br>`;
-      if (Square.isSquare(rect)) result += "✅ Це квадрат!";
-      else result += "❌ Це не квадрат.";
+      if (Square.isSquare(rect)) result += " Це квадрат!";
+      else result += " Це не квадрат.";
       document.getElementById("rectangleOutput").innerHTML = result;
     }
 

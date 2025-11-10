@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота №9 — JavaScript-анімації</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top, #e0f7fa, #ffffff);
+      overflow: hidden;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2 {
+      color: #00695c;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    /* === Анімований логотип === */
+    #logo {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 120px auto 0;
+    }
+
+    .shape {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, #26a69a, #00796b);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    .text {
+      position: absolute;
+      width: 100%;
+      top: 65%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #004d40;
+      font-weight: bold;
+      font-size: 18px;
+      opacity: 0;
+      text-shadow: 0 0 8px rgba(255,255,255,0.6);
+      letter-spacing: 1px;
+    }
+
+    .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #00796b;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #004d40;
+      transform: scale(1.05);
+    }
+
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* стиль для кнопки "На головну" */
+    .home-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #00897b;
+      color: white;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .home-btn:hover {
+      background-color: #004d40;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>Лабораторна робота №9</h1>
+  <h2>JavaScript-анімації</h2>
+
+  <div id="logo">
+    <div class="shape" id="shape"></div>
+    <div class="text" id="logoText"></div>
+  </div>
+
+  <button id="toggleBtn">Запустити / Зупинити логотип</button>
+  <br>
+  <a href="https://dmutro-lab.github.io/knu/" class="home-btn">На головну сторінку</a>
+
+  <script>
+    const shape = document.getElementById("shape");
+    const textContainer = document.getElementById("logoText");
+    const toggleBtn = document.getElementById("toggleBtn");
+
+    const text = "Інженерія програмного забезпечення";
+    text.split("").forEach(char => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.classList.add("char");
+      textContainer.appendChild(span);
+    });
+
+    const chars = document.querySelectorAll(".char");
+
+    let running = false;
+    let scale = 1;
+    let growing = true;
+    let angle = 0;
+    let dx = 2, dy = 2;
+    let x = 0, y = 0;
+    let animationFrame;
+
+    function createParticle(x, y) {
+      const p = document.createElement("div");
+      p.classList.add("particle");
+      const color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+      p.style.background = color;
+      p.style.left = x + "px";
+      p.style.top = y + "px";
+      document.body.appendChild(p);
+
+      let opacity = 1;
+      let size = 8;
+      const fade = () => {
+        if (!running) return;
+        opacity -= 0.02;
+        size += 1;
+        p.style.opacity = opacity;
+        p.style.width = size + "px";
+        p.style.height = size + "px";
+        if (opacity <= 0) p.remove();
+        else requestAnimationFrame(fade);
+      };
+      fade();
+    }
+
+    function animateText() {
+      chars.forEach((char, i) => {
+        setTimeout(() => {
+          char.style.transition = "all 0.4s ease";
+          char.style.opacity = 1;
+          char.style.transform = "translateY(0)";
+        }, i * 70);
+      });
+      textContainer.style.transition = "opacity 1s ease";
+      textContainer.style.opacity = 1;
+    }
+
+    function hideText() {
+      chars.forEach((char, i) => {
+        setTimeout(() => {
+          char.style.transition = "all 0.3s ease";
+          char.style.opacity = 0;
+          char.style.transform = "translateY(10px)";
+        }, i * 50);
+      });
+      textContainer.style.opacity = 0;
+    }
+
+    function animateLogo() {
+      if (!running) return;
+
+      // Рух кола
+      x += dx;
+      y += dy;
+      if (x > 100 || x < -100) dx *= -1;
+      if (y > 100 || y < -100) dy *= -1;
+
+      // Масштабування
+      if (growing) scale += 0.01;
+      else scale -= 0.01;
+      if (scale > 1.3 || scale < 0.8) growing = !growing;
+
+      // Обертання
+      angle += 2;
+
+      shape.style.transform = `translate(${x}px, ${y}px) scale(${scale}) rotate(${angle}deg)`;
+      shape.style.background = `radial-gradient(circle, hsl(${angle * 3},70%,60%), hsl(${angle * 3 + 60},60%,40%))`;
+
+      // Частинки
+      if (Math.random() < 0.1) {
+        const rect = shape.getBoundingClientRect();
+        createParticle(rect.left + 60, rect.top + 60);
+      }
+
+      animationFrame = requestAnimationFrame(animateLogo);
+    }
+
+    toggleBtn.onclick = () => {
+      running = !running;
+      if (running) {
+        animateText();
+        animateLogo();
+      } else {
+        hideText();
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  </script>
+</body>
+</html>
