@@ -121,8 +121,8 @@
     const textContainer = document.getElementById("logoText");
     const toggleBtn = document.getElementById("toggleBtn");
 
-    const text = "Інженерія програмного забезпечення";
-    text.split("").forEach(char => {
+    const text = "Інженерія  програмного  забезпечення";
+    text.split("\s").forEach(char => {
       const span = document.createElement("span");
       span.textContent = char;
       span.classList.add("char");

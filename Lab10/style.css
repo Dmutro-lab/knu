@@ -1,0 +1,95 @@
+/* ==== Загальний стиль темної теми ==== */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 40px;
+    background: #121212;
+    color: #f5f5f5;
+}
+
+/* ==== Заголовок ==== */
+h1 {
+    text-align: center;
+    color: #00ff80;
+    margin-bottom: 30px;
+}
+
+/* ==== Блоки завдань ==== */
+.task-block {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 10px #00ff8055;
+}
+
+/* ==== Кнопки ==== */
+button, .button {
+    background-color: #00e676;
+    color: #000;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+    display: inline-block;
+    text-decoration: none;
+}
+
+button:hover, .button:hover {
+    background: #ff1744;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* ==== Ефект при наведенні ==== */
+.hoverBox {
+    background-color: #006633;       /* Яскравий зелений */
+    border: 2px solid #00ff80;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* ==== Активний блок після кліку ==== */
+.activeBox {
+    border: 3px solid #ff1744;
+    background: #660000;             /* Контрастний червоний */
+}
+
+/* ==== Диви для взаємодії ==== */
+#hoverDiv, #clickBox {
+    padding: 12px;
+   
+    border-radius: 10px;
+   
+    margin-bottom: 15px;
+
+    /* ДУЖЕ ВАЖЛИВО – плавний перехід */
+    transition: 0.25s;
+}
+
+/* ==== Зображення ==== */
+#demoImg {
+    display: none;
+    margin-top: 10px;
+    border-radius: 12px;
+    max-width: 300px;
+    box-shadow: 0 0 10px #00ff8066;
+}
+
+/* ==== Поле вводу + повідомлення ==== */
+input {
+    background: #2a2a2a;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+#msg {
+    display: block;
+    margin-top: 10px;
+    color: #ff5555;
+    font-weight: bold;
+}
