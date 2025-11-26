@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery Effects — Завдання 1</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="js/jquery-3.7.1.min.js"></script> 
+</head>
+<body>
+
+<header>
+  <h1>Завдання 1 — jQuery ефекти</h1>
+  <p>Ваш варіант: <b>.slideDown()</b></p>
+</header>
+
+<!-- ==== SLIDE DOWN ==== -->
+<div class="task-block">
+  <h2>DEMO: .slideDown()</h2>
+  <button id="btnSlideDown">slideDown()</button>
+  <div id="slideBox" class="box hidden">Це скритий блок (slideDown)</div>
+</div>
+
+<!-- ==== FADE TOGGLE ==== -->
+<div class="task-block">
+  <h2>DEMO: .fadeToggle()</h2>
+  <button id="btnFade">fadeToggle()</button>
+  <div id="fadeBox" class="box">Цей блок буде fadeToggle</div>
+</div>
+
+<!-- ==== DELAY ==== -->
+<div class="task-block">
+  <h2>DEMO: .delay()</h2>
+  <button id="btnDelay">delay() + fadeOut()</button>
+  <div id="delayBox" class="box">Спочатку пауза — потім зникну</div>
+</div>
+
+<script>
+$(document).ready(function () {
+
+  // slideDown()
+  $("#btnSlideDown").click(function () {
+    $("#slideBox").slideDown(600);
+  });
+
+  // fadeToggle()
+  $("#btnFade").click(function () {
+    $("#fadeBox").fadeToggle(600);
+  });
+
+  // delay()
+  $("#btnDelay").click(function () {
+    $("#delayBox")
+      .delay(1000)       // 1 секунда затримки
+      .fadeOut(800)      // потім зникнення
+      .delay(800)        // ще пауза
+      .fadeIn(800);      // і знову появиться
+  });
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery Анімація — Завдання 2</title>
+
+  
+  <link rel="stylesheet" href="style.css">
+
+ 
+  <script src="js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>Анімований логотип спеціальності 121 — Інженерія програмного забезпечення</h1>
+</header>
+
+
+<div id="logo">
+  <span>121 ІПЗ</span>
+</div>
+
+
+<div class="btn-wrapper">
+  <button id="startAnim">Запустити анімацію</button>
+  <button id="stopAnim">Зупинити</button>
+</div>
+
+<script>
+$(document).ready(function () {
+  let pulseInterval = null;  
+  let moving = true;  
+
+  function autoMove() {
+    if (!moving) return;
+
+    $("#logo").animate({ left: "70%" }, 1500, "swing")
+              .animate({ left: "30%" }, 1500, "swing", autoMove); 
+  }
+
+  autoMove(); 
+
+
+
+  $("#startAnim").click(function () {
+    moving = false;        
+    $("#logo").stop(true, true);
+
+    clearInterval(pulseInterval);
+
+    $("#logo").css({
+      top: "400px",
+      left: "10%",
+      opacity: 1,
+      width: "120px"
+    });
+
+
+    $("#logo").animate(
+      { top: "200px", left: "50%", width: "200px" },
+      {
+        duration: 1500,
+        easing: "swing",
+        queue: true,
+        complete: function () {
+ 
+          pulseInterval = setInterval(() => {
+            $("#logo").animate({ opacity: 0.6 }, 400)
+                      .animate({ opacity: 1 }, 400);
+          }, 800);
+
+          moving = true;   
+          autoMove();      
+        }
+      }
+    );
+  });
+
+  $("#stopAnim").click(function () {
+    moving = false;             
+    $("#logo").stop(true, true);
+    clearInterval(pulseInterval);
+  });
+
+});
+</script>
+
+
+</body>
+</html>
