@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна №11 — jQuery</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    body {
+        background-color: #0a0a0a;
+        color: #fff;
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #00ff80;
+      color: #000;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      z-index: 100;
+    }
+
+    .back-button:hover {
+      background-color: #00cc66;
+    }
+
+    header {
+        text-align: center;
+        padding: 40px 10px;
+        background: #212121; 
+        color: #ffffff;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    header h3 {
+        font-size: 28px;
+        margin: 0;
+    }
+
+    .container {
+        width: 100%;
+        padding: 80px 40px;
+        box-sizing: border-box;
+    }
+
+    .task-block {
+        background-color: #1a1a1a;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 0 10px #00ff8055;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #00ff80;
+        color: #000;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 5px;
+        margin: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background-color: #00cc66;
+    }
+
+    .output {
+        margin-top: 10px;
+        background-color: #2a2a2a;
+        padding: 8px;
+        border-radius: 5px;
+    }
+
+    input, select {
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        color: #fff;
+        padding: 6px;
+        border-radius: 5px;
+        width: 200px;
+    }
+  </style>
+</head>
+<body>
+
+
+<a href="index.html" class="back-button"> ← Назад </a>
+
+<header>
+  <h3>Лабораторна робота №11 — jQuery</h3>
+  <h4>Маніпуляції з DOM, CSS, атрибутами, селекторами та методами</h4>
+</header>
+
+<div class="container">
+<div class="task-block">
+  <h2>Завдання 1 – .html(), .css(), .val(), .attr(), .removeAttr()</h2>
+
+  <h3 id="title">Початковий текст</h3>
+  <input id="input1" type="text" value="Hello">
+
+  <button id="btn_html">.html()</button>
+  <button id="btn_css">.css()</button>
+  <button id="btn_val">.val()</button>
+  <button id="btn_attr">.attr()</button>
+  <button id="btn_remAttr">.removeAttr()</button>
+
+  <div class="output" id="out1"></div>
+</div>
+
+
+<div class="task-block">
+  <h2>Завдання 2 – prepend(), clone(), height(func), outerHeight()</h2>
+
+  <div id="box" style="background:#333; padding:10px;">Це блок</div>
+
+  <button id="btnPrepend">.prepend()</button>
+  <button id="btnClone">.clone()</button>
+  <button id="btnHeight">.height()</button>
+  <button id="btnOuterHeight">.outerHeight()</button>
+
+  <div class="output" id="out2"></div>
+</div>
+
+
+<div class="task-block">
+  <h2>Завдання 3 – children(), is(), parents(), closest(), parentsUntil()</h2>
+
+  <div class="parent">
+    <ul>
+      <li>Елемент 1</li>
+      <li class="active">Елемент 2</li>
+      <li>Елемент 3</li>
+    </ul>
+  </div>
+
+  <button id="b_ch">children()</button>
+  <button id="b_is">is()</button>
+  <button id="b_pr">parents()</button>
+  <button id="b_cl">closest()</button>
+  <button id="b_pu">parentsUntil()</button>
+
+</div>
+
+
+<div class="task-block">
+  <h2>Завдання 4 — filter()</h2>
+
+  <ul id="list">
+    <li class="item">Пункт 1</li>
+    <li>Пункт 2</li>
+    <li class="item">Пункт 3</li>
+    <li>Пункт 4</li>
+    <li class="item">Пункт 5</li>
+  </ul>
+
+  <button id="f1">Стилі для .item</button>
+  <button id="f2">Кожен 3-й li</button>
+</div>
+
+
+<div class="task-block">
+  <h2>Завдання 5 — $.map() + 3 методи: $.trim(), $.type(), $.grep()</h2>
+  <p>Результати виводяться в консоль!</p>
+  <button id="runTask5">Запустити</button>
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+
+  // ==================== ЗАВДАННЯ 1 =====================
+  $("#btn_html").click(function(){
+    $("#title").html("<b>Змінено через .html()</b>");
+  });
+
+  $("#btn_css").click(function(){
+    $("#title").css({ "color": "red", "font-size": "28px" });
+  });
+
+  $("#btn_val").click(function(){
+    $("#out1").text("value = " + $("#input1").val());
+  });
+
+  $("#btn_attr").click(function(){
+    $("#input1").attr("placeholder","Введіть ясно...");
+  });
+
+  $("#btn_remAttr").click(function(){
+    $("#input1").removeAttr("value");
+  });
+
+
+  // ==================== ЗАВДАННЯ 2 =====================
+  $("#btnPrepend").click(function(){
+    $("#box").prepend("<b>[START]</b> ");
+  });
+
+  $("#btnClone").click(function(){
+    $("body").append( $("#box").clone() );
+  });
+
+  $("#btnHeight").click(function(){
+    $("#box").height(function(i, h){ return h + 20; });
+  });
+
+  $("#btnOuterHeight").click(function(){
+    $("#out2").text("OuterHeight: " + $("#box").outerHeight());
+  });
+
+
+  // ==================== ЗАВДАННЯ 3 =====================
+  $("#b_ch").click(function(){ $("ul").children().css("color", "yellow"); });
+  $("#b_is").click(function(){ 
+      if( $(".active").is("li") ) alert(".active Є li!");
+  });
+  $("#b_pr").click(function(){ $(".active").parents().css("border","2px solid blue"); });
+  $("#b_cl").click(function(){ $(".active").closest("div").css("background","green"); });
+  $("#b_pu").click(function(){ $(".active").parentsUntil(".parent").css("background","purple"); });
+
+  // ==================== ЗАВДАННЯ 4 =====================
+  $("#f1").click(function(){
+    $("#list li").filter(".item").css("color","lime").append(" [modify]");
+  });
+
+  $("#f2").click(function(){
+    $("#list li").filter(":nth-child(3n)").css("background","orange").append(" [modify]");
+  });
+
+  // ==================== ЗАВДАННЯ 5 =====================
+  $("#runTask5").click(function(){
+    console.clear();
+
+    // $.map()
+    const arr = [1, 2, 3];
+    console.log("map:", $.map(arr, v => v*10));
+
+    console.log("trim:", $.trim("     hello     "));
+
+    console.log("type num =", $.type(123));
+    console.log("type str =", $.type("qwerty"));
+    console.log("type array =", $.type([1,2,3]));
+    console.log("type obj =", $.type({a:1}));
+    console.log("type bool =", $.type(true));
+
+    const nums = [1,5,2,8,3];
+    console.log("grep >", $.grep(nums, x => x>3));
+  });
+
+
+
+});
+</script>
+
+</body>
+</html>
